@@ -10,11 +10,11 @@ type Data = {
 
 @Injectable()
 export class FormTestService {
-  url = 'https://jsonplaceholder.typicode.com';
+  urlBase = 'https://jsonplaceholder.typicode.com';
 
   private http = inject(HttpClient);
 
-  create(data: Data): Observable<Data> {
-    return this.http.post<Data>(`${this.url}/posts`, data);
+  create(data: Data, url:string = this.urlBase): Observable<Data> {
+    return this.http.post<Data>(`${url}/posts`, data);
   }
 }
