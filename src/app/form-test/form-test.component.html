@@ -1,1 +1,5 @@
-<p>form-test works!</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <input type="input" placeholder="Name" formControlName="name" />
+  <input type="number" placeholder="Age" formControlName="age" />
+  <button type="submit">Enviar</button>
+</form>

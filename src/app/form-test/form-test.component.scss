@@ -1,0 +1,11 @@
+form {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  input {
+    margin-bottom: 2px;
+  }
+  button {
+    width: 40%;
+  }
+}

@@ -1,33 +1,34 @@
-import {
-  Component,
-  DestroyRef,
-  inject,
-  OnInit,
-} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormTestService } from './form-test.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-form-test',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   providers: [FormTestService],
   templateUrl: './form-test.component.html',
   styleUrl: './form-test.component.scss',
 })
-export class FormTestComponent implements OnInit {
+export class FormTestComponent {
   private service = inject(FormTestService);
 
-  destroyRef = inject(DestroyRef);
+  private fb = inject(FormBuilder);
 
-  ngOnInit(): void {
+  form: FormGroup = this.fb.group({
+    name: null,
+    age: null,
+  });
+
+  onSubmit() {
     this.service
-      .getAll()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .create(this.form.value)
+      .pipe(take(1))
       .subscribe({
-        next: (v) => console.log(v),
-        error: (e:HttpErrorResponse) => console.log(e)
+        next: (res) => console.log(res),
+        error: (e: HttpErrorResponse) => console.log(e),
       });
   }
 }
